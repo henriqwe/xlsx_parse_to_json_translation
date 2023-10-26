@@ -1,9 +1,9 @@
 type Props = { data: string[][]; header: string[] };
 
-type TObj = { [x: string]: string[] };
+type Tdata = { [x: string]: string[] };
 
 export function arrayToJson({ data, header }: Props) {
-  let obj: TObj = {};
+  let obj: Tdata = {};
 
   for (const iterator of header) {
     obj[iterator] = [];

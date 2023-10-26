@@ -7,20 +7,20 @@ import fs from "fs";
 console.log("start");
 const workSheetsFromFile = xlsx.parse(`${__dirname}/myFile.xlsx`, {});
 
-const data = workSheetsFromFile[0].data
-  .filter((data) => data.length)
-  .map((data) => data);
+const workSheetsData = workSheetsFromFile[0].data.filter(
+  (data) => data.length
+) as string[][];
 
-const header = data.shift() as string[];
+const header = workSheetsData.shift() as string[];
 
-const jsonData = arrayToJson({ data, header });
+const data = arrayToJson({ data: workSheetsData, header });
 
-const englishKeys = generateKeys(jsonData["INGLES"]);
+const englishKeys = generateKeys(data["INGLES"]);
 
-const objData = formatObject({ data: jsonData, keys: englishKeys });
+const dataFormated = formatObject({ data, keys: englishKeys });
 
 fs.writeFile(
   "./translations.json",
-  JSON.stringify(objData, undefined, 2),
+  JSON.stringify(dataFormated, undefined, 2),
   (err) => console.log("end")
 );
